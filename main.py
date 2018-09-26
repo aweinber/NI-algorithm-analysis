@@ -2,21 +2,23 @@ import random
 import sys
 
 def read_in_file(file_name):
+    """Given a file with a maxsat problem in specified format,
+    parse the file and return an array of boolean clauses"""
     test_object = open(file_name, 'r')
     data = test_object.readlines()
-    out = []
+    clause_set = []
     firstline = data[0].split(' ')
     num_var = firstline[2]
     num_clauses = firstline[3]
 
     for line in range(1, len(data)):
         str_array = data[line].split(' ')[:-1]  # copy into array
-        int_arr = list(map(int, str_array))  # map from str to ints
-        out.append(int_arr)
+        clause = list(map(int, str_array))  # map from str to ints
+        clause_set.append(clause)
 
     test_object.close()
 
-    return out, int(num_var), int(num_clauses)
+    return clause_set, int(num_var), int(num_clauses)
 
 
 def create_sample_vectors(vector, num_samples):
@@ -40,9 +42,7 @@ def mutate_probability_vector(vector, mutate_prob, mutate_shift):
     """Given a probability vector, the probability of a mutation, and the
     strength of a mutation, apply mutations to create a new probability vector
     and the result."""
-
     new_vector = vector
-
     mutate_direction = 0  # default direction is downward
     for i in range(0, len(vector)):
         if random.uniform(0, 1) <= mutate_prob:
@@ -56,30 +56,20 @@ def is_clause_satisfied(clause, sample):
     """Given a single clause and a single sample population,
     determine whether the sample satisfies the clause."""
     for i in range(0, len(clause)):
-
         if clause[i] < 0 and not sample[i]:  # neg num satisfied by False
-
             return True
-
         elif clause[i] > 0 and sample[i]:  # pos num satisfied by True
-
             return True
-
     return False
 
 
 def count_satisfied_clauses(clause_set, sample):
     """Given a set of boolean clauses and a single sample, determine
     how many clauses the sample answer set satisfies."""
-
     counter = 0
-
     for clause in clause_set:
-
         if is_clause_satisfied(clause, sample):
-
             counter += 1
-
     return counter
 
 
@@ -87,13 +77,9 @@ def find_sample_counts(clause_set, samples):
     """Given a list of clauses and a list of samples, return a list
     sample_satisfy_count such that sample_satisfy_count[i] = x
     means that samples[i] satisfied x clauses"""
-
     sample_satisfy_count = [None] * len(samples)
-
     for i in range(0, len(samples)):
-
         sample_satisfy_count[i] = count_satisfied_clauses(clause_set, samples[i])
-
     return sample_satisfy_count
 
 
@@ -161,20 +147,15 @@ def run_pbil(input_list):
 
 
 def main():
-
-    input_list = sys.argv[1:] # ignore 'main.py' command
-    print(input_list)
+    input_list = sys.argv[1:]  # ignore 'main.py' command
+    # print(input_list)
     if len(input_list) != 8:
         print("Error... must accept 8 command line arguments")
         return
-    algorithm = input_list[7]
+    algorithm_type = input_list[7]
 
-    if algorithm == 'p':
+    if algorithm_type == 'p':
         run_pbil(input_list)
-
-
-
-
 
 
 if __name__ == '__main__':
