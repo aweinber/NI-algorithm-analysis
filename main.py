@@ -1,4 +1,5 @@
 import random
+import sys
 
 def read_in_file(file_name):
     test_object = open(file_name, 'r')
@@ -171,12 +172,25 @@ def update_from_worst(probability_vector, best_sample, neg_learning_rate):
 
 def main():
 
-    num_samples = 100
-    num_iterations = 1000
-    mut_probability = .02
-    mut_shift = .05
 
-    clause_set, num_var, num_clauses = read_in_file("problem-2.cnf")
+    input_list = sys.argv[1:]
+    print(input_list)
+    if len(input_list) != 8:
+        print("Error... must accept 8 command line arguments")
+        return
+    file_name = input_list[0]
+    num_individuals = int(input_list[1])
+    learning_rate = float(input_list[2])
+    neg_learning_rate = float(input_list[3])
+    mutation_prob = float(input_list[4])
+    mutation_amount = float(input_list[5])
+    num_iterations = int(input_list[6])
+    algorithm = input_list[7]
+    if (algorithm != 'p'):
+        print("Algorithm must be p")
+        return
+
+    clause_set, num_var, num_clauses = read_in_file(file_name)
     # print("Clauses:", clause_set)
     print("Beginning...")
 
@@ -187,15 +201,12 @@ def main():
     best_clauses_sat = 0
 
     while counter < num_iterations:
-        samples = create_sample_vectors(probability_vector, num_samples)
-        # print("Samples:", samples)
+        samples = create_sample_vectors(probability_vector, num_individuals)
 
         sample_satisfy_counts = find_sample_counts(clause_set, samples)
-        # print("Satisfy counts:", sample_satisfy_counts)
 
         best, worst, best_clauses_sat = find_outlier_samples(sample_satisfy_counts, samples, len(clause_set))
 
-        # print("Best: ", best, "Worst:", worst)
 
         probability_vector = update_toward_best(probability_vector, best, .1)
 
@@ -203,9 +214,8 @@ def main():
 
             probability_vector = update_from_worst(probability_vector, best, .075)
 
-        mutate_probability_vector(probability_vector, mut_probability, mut_shift)
+        mutate_probability_vector(probability_vector, mutation_prob, mutation_amount)
 
-        # print("New probabilities:", probability_vector)
 
         counter += 1
 
