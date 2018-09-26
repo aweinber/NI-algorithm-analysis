@@ -83,7 +83,7 @@ def find_sample_counts(clause_set, samples):
     return sample_satisfy_count
 
 
-def find_outlier_samples(sample_satisfy_counts, samples, num_clauses):
+def find_outlier_samples(sample_satisfy_counts, samples):
     """Finds the best and the worst samples based on the minimum and maximum.
     Returns the best sample, the worst sample, and the index of the best sample"""
     best_amount = max(sample_satisfy_counts)
@@ -136,7 +136,7 @@ def run_pbil(input_list):
     for i in range(0, num_iterations):
         samples = create_sample_vectors(probability_vector, num_individuals)
         sample_satisfy_counts = find_sample_counts(clause_set, samples)
-        best, worst, best_clauses_sat = find_outlier_samples(sample_satisfy_counts, samples, len(clause_set))
+        best, worst, best_clauses_sat = find_outlier_samples(sample_satisfy_counts, samples)
         probability_vector = update_vector_with_outlier(probability_vector, best, learning_rate)
         if best != worst:
             probability_vector = update_vector_with_outlier(probability_vector, best, neg_learning_rate)
