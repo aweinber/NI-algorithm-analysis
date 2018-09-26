@@ -20,18 +20,17 @@ def read_in_file(file_name):
 
 
 def create_sample_vectors(vector, num_samples):
-
+    """Create num_samples number of random samples, where each sample array
+    is comprised of booleans such that the probability that sample[i] == True
+    is equal to probability_vector[i]. Returns list of samples, each of which
+    is a list."""
     samples = []
 
     for i in range(0, num_samples):
-
         new_sample = [False] * (len(vector))
-
         for j in range(0, len(vector)):
-
             if random.uniform(0, 1) < vector[j]:
                 new_sample[j] = True
-
         samples.append(new_sample)
 
     return samples
@@ -40,22 +39,16 @@ def create_sample_vectors(vector, num_samples):
 def mutate_probability_vector(vector, mutate_prob, mutate_shift):
     """Given a probability vector, the probability of a mutation, and the
     strength of a mutation, apply mutations to create a new probability vector
-    and the result"""
+    and the result."""
 
     new_vector = vector
 
-    mutate_direction = 0
-
+    mutate_direction = 0  # default direction is downward
     for i in range(0, len(vector)):
-
         if random.uniform(0, 1) <= mutate_prob:
-
-            if random.uniform(0, 1) <= .5:
-
+            if random.uniform(0, 1) <= .5:  # switch direction up
                 mutate_direction = 1
-
             new_vector[i] = vector[i] * (1.0 - mutate_shift) + mutate_direction * mutate_shift
-
     return new_vector
 
 
@@ -105,7 +98,8 @@ def find_sample_counts(clause_set, samples):
 
 
 def find_outlier_samples(sample_satisfy_counts, samples, num_clauses):
-
+    """Finds the best and the worst samples based on the minimum and maximum.
+    TODO: refactor -- max() in python means we don't need to iterate over"""
     best_sample_count = -1  # guarantee we will get a maximum b/c min is sat 0
     worst_sample_count = num_clauses + 1  # guarantee we will get a minimum b/c max is num_clauses
 
@@ -121,21 +115,19 @@ def find_outlier_samples(sample_satisfy_counts, samples, num_clauses):
             best = samples[i]
             best_sample_count = sample_satisfy_counts[i]
             best_index = i
-            # print("New best:", best)
 
         if sample_satisfy_counts[i] < worst_sample_count:
 
             worst = samples[i]
             worst_sample_count = sample_satisfy_counts[i]
-            worst_index = i
+            # worst_index = i
 
-    # print("Best got:", sample_satisfy_counts[best_index])
-    # print("Worst got:", sample_satisfy_counts[worst_index])
     return best, worst, sample_satisfy_counts[best_index]
 
 
 def update_toward_best(probability_vector, best_sample, learning_rate):
-
+    """Updates probability vector toward best by learning rate magnitude.
+    Returns the changed probability vector."""
     for i in range(0, len(probability_vector)):
 
         vec = probability_vector[i]
@@ -153,7 +145,7 @@ def update_toward_best(probability_vector, best_sample, learning_rate):
 
 
 def update_from_worst(probability_vector, best_sample, neg_learning_rate):
-
+    """Updates away from worst at negative learning rate"""
     for i in range(0, len(probability_vector)):
 
         vec = probability_vector[i]
@@ -170,14 +162,8 @@ def update_from_worst(probability_vector, best_sample, neg_learning_rate):
     return probability_vector
 
 
-def main():
+def run_pbil(input_list):
 
-
-    input_list = sys.argv[1:]
-    print(input_list)
-    if len(input_list) != 8:
-        print("Error... must accept 8 command line arguments")
-        return
     file_name = input_list[0]
     num_individuals = int(input_list[1])
     learning_rate = float(input_list[2])
@@ -185,42 +171,42 @@ def main():
     mutation_prob = float(input_list[4])
     mutation_amount = float(input_list[5])
     num_iterations = int(input_list[6])
-    algorithm = input_list[7]
-    if (algorithm != 'p'):
-        print("Algorithm must be p")
-        return
 
     clause_set, num_var, num_clauses = read_in_file(file_name)
-    # print("Clauses:", clause_set)
     print("Beginning...")
 
     probability_vector = [.5] * num_var  # starting values
 
-    counter = 0
-
     best_clauses_sat = 0
 
-    while counter < num_iterations:
+    for i in range(0, num_iterations):
+
         samples = create_sample_vectors(probability_vector, num_individuals)
-
         sample_satisfy_counts = find_sample_counts(clause_set, samples)
-
         best, worst, best_clauses_sat = find_outlier_samples(sample_satisfy_counts, samples, len(clause_set))
-
-
-        probability_vector = update_toward_best(probability_vector, best, .1)
-
+        probability_vector = update_toward_best(probability_vector, best, learning_rate)
         if best != worst:
-
-            probability_vector = update_from_worst(probability_vector, best, .075)
-
+            probability_vector = update_from_worst(probability_vector, best, neg_learning_rate)
         mutate_probability_vector(probability_vector, mutation_prob, mutation_amount)
-
-
-        counter += 1
 
     print("Final probabilities:", probability_vector)
     print("Most clauses satisfied at end:", best_clauses_sat)
+
+
+def main():
+
+    input_list = sys.argv[1:] # ignore 'main.py' command
+    print(input_list)
+    if len(input_list) != 8:
+        print("Error... must accept 8 command line arguments")
+        return
+    algorithm = input_list[7]
+
+    if algorithm == 'p':
+        run_pbil(input_list)
+
+
+
 
 
 
