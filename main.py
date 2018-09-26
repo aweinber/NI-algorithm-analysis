@@ -99,58 +99,26 @@ def find_sample_counts(clause_set, samples):
 
 def find_outlier_samples(sample_satisfy_counts, samples, num_clauses):
     """Finds the best and the worst samples based on the minimum and maximum.
-    TODO: refactor -- max() in python means we don't need to iterate over"""
-    best_sample_count = -1  # guarantee we will get a maximum b/c min is sat 0
-    worst_sample_count = num_clauses + 1  # guarantee we will get a minimum b/c max is num_clauses
+    Returns the best sample, the worst sample, and the index of the best sample"""
+    best_amount = max(sample_satisfy_counts)
+    best_index = sample_satisfy_counts.index(best_amount)
+    best_sample = samples[best_index]
 
-    best = []
-    worst = []
-    best_index = 0
-    worst_index = 0
+    worst_amount = max(sample_satisfy_counts)
+    worst_index = sample_satisfy_counts.index(worst_amount)
+    worst_sample = samples[worst_index]
 
-    for i in range(0, len(sample_satisfy_counts)):
-
-        if sample_satisfy_counts[i] > best_sample_count:
-
-            best = samples[i]
-            best_sample_count = sample_satisfy_counts[i]
-            best_index = i
-
-        if sample_satisfy_counts[i] < worst_sample_count:
-
-            worst = samples[i]
-            worst_sample_count = sample_satisfy_counts[i]
-            # worst_index = i
-
-    return best, worst, sample_satisfy_counts[best_index]
+    return best_sample, worst_sample, sample_satisfy_counts[best_index]
 
 
-def update_toward_best(probability_vector, best_sample, learning_rate):
-    """Updates probability vector toward best by learning rate magnitude.
-    Returns the changed probability vector."""
+def update_vector_with_outlier(probability_vector, best_sample, rate):
+    """Updates a probability vector using the outlying best sample using
+    a magnitude rate. Reusable for update-to-best and update-from-worst"""
     for i in range(0, len(probability_vector)):
 
         vec = probability_vector[i]
 
-        vec = vec * (1.0 - learning_rate) + (best_sample[i] * learning_rate)
-
-        if vec > 1:
-            vec = 1
-        elif vec < 0:
-            vec = 0
-
-        probability_vector[i] = vec
-
-    return probability_vector
-
-
-def update_from_worst(probability_vector, best_sample, neg_learning_rate):
-    """Updates away from worst at negative learning rate"""
-    for i in range(0, len(probability_vector)):
-
-        vec = probability_vector[i]
-
-        vec = vec * (1.0 - neg_learning_rate) + (best_sample[i] * neg_learning_rate)
+        vec = vec * (1.0 - rate) + (best_sample[i] * rate)
 
         if vec > 1:
             vec = 1
@@ -180,13 +148,12 @@ def run_pbil(input_list):
     best_clauses_sat = 0
 
     for i in range(0, num_iterations):
-
         samples = create_sample_vectors(probability_vector, num_individuals)
         sample_satisfy_counts = find_sample_counts(clause_set, samples)
         best, worst, best_clauses_sat = find_outlier_samples(sample_satisfy_counts, samples, len(clause_set))
-        probability_vector = update_toward_best(probability_vector, best, learning_rate)
+        probability_vector = update_vector_with_outlier(probability_vector, best, learning_rate)
         if best != worst:
-            probability_vector = update_from_worst(probability_vector, best, neg_learning_rate)
+            probability_vector = update_vector_with_outlier(probability_vector, best, neg_learning_rate)
         mutate_probability_vector(probability_vector, mutation_prob, mutation_amount)
 
     print("Final probabilities:", probability_vector)
