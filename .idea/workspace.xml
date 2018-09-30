@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2349d562-1b54-478d-9c75-8cb2d9dce114" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EvolutionaryAlgorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/EvolutionaryAlgorithms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testproblem.cnf" beforeDir="false" afterPath="$PROJECT_DIR$/testproblem.cnf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,35 +17,36 @@
     <session id="1918899077">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="cnf" value="4" />
-          <entry key="py" value="1" />
+          <entry key="py" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="4" />
-          <entry key="Python" value="1" />
+          <entry key="Python" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cnf" value="111" />
-          <entry key="py" value="9171" />
+          <entry key="cnf" value="112" />
+          <entry key="py" value="9846" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="111" />
-          <entry key="Python" value="9171" />
+          <entry key="PLAIN_TEXT" value="112" />
+          <entry key="Python" value="9846" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -51,45 +55,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="138" column="91" selection-start-line="138" selection-start-column="91" selection-end-line="138" selection-end-column="91" />
+            <state relative-caret-position="-682">
+              <caret line="80" column="48" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1537983913003" expanded="true" signature="1231:1233" ph="..." />
-                <marker date="1537983913003" expanded="true" signature="1298:5311" ph="..." />
-                <marker date="1537983913003" expanded="true" signature="4110:5311" ph="..." />
-                <marker date="1537983913003" expanded="true" signature="4137:5311" ph="..." />
+                <marker date="1537984009389" expanded="true" signature="1232:1234" ph="..." />
+                <marker date="1537984009389" expanded="true" signature="1299:5312" ph="..." />
+                <marker date="1537984009389" expanded="true" signature="4111:5312" ph="..." />
+                <marker date="1537984009389" expanded="true" signature="4138:5312" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/problem-3.cnf">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/EvolutionaryAlgorithms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/problem-2.cnf">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testproblem.cnf">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+            <state relative-caret-position="209">
+              <caret line="730" lean-forward="true" selection-start-line="730" selection-end-line="730" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/simplest.cnf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+            <state relative-caret-position="-108">
+              <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -111,8 +100,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/testproblem.cnf" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/testproblem.cnf" />
+        <option value="$PROJECT_DIR$/EvolutionaryAlgorithms.py" />
       </list>
     </option>
   </component>
@@ -123,7 +113,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="157" />
+    <option name="x" value="148" />
     <option name="y" value="23" />
     <option name="width" value="1122" />
     <option name="height" value="777" />
@@ -134,6 +124,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -145,7 +136,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -179,10 +169,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="157" y="23" width="1122" height="777" extended-state="0" />
+    <frame x="148" y="23" width="1122" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15555556" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16481481" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -212,6 +202,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/problem-3.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/problem-2.cnf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -219,37 +216,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simplest.cnf">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        <state relative-caret-position="-682">
+          <caret line="80" column="48" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <marker date="1537984009389" expanded="true" signature="1232:1234" ph="..." />
+            <marker date="1537984009389" expanded="true" signature="1299:5312" ph="..." />
+            <marker date="1537984009389" expanded="true" signature="4111:5312" ph="..." />
+            <marker date="1537984009389" expanded="true" signature="4138:5312" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testproblem.cnf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+          <caret line="3" column="6" lean-forward="true" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/problem-3.cnf">
+    <entry file="file://$PROJECT_DIR$/simplest.cnf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        <state relative-caret-position="-108">
+          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/EvolutionaryAlgorithms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="138" column="91" selection-start-line="138" selection-start-column="91" selection-end-line="138" selection-end-column="91" />
+        <state relative-caret-position="209">
+          <caret line="730" lean-forward="true" selection-start-line="730" selection-end-line="730" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1537983913003" expanded="true" signature="1231:1233" ph="..." />
-            <marker date="1537983913003" expanded="true" signature="1298:5311" ph="..." />
-            <marker date="1537983913003" expanded="true" signature="4110:5311" ph="..." />
-            <marker date="1537983913003" expanded="true" signature="4137:5311" ph="..." />
           </folding>
         </state>
       </provider>

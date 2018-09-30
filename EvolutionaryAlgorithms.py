@@ -637,10 +637,17 @@ def is_clause_satisfied(clause, sample):
     """Given a single clause and a single sample population,
     determine whether the sample satisfies the clause."""
     for i in range(0, len(clause)):
-        if clause[i] < 0 and not sample[i]:  # neg num satisfied by False
+        index_in_sample = abs(clause[i]) - 1
+
+        if clause[i] < 0 and not sample[index_in_sample]:  # neg num satisfied by False
+
             return True
-        elif clause[i] > 0 and sample[i]:  # pos num satisfied by True
+
+        elif clause[i] > 0 and sample[index_in_sample]:  # pos num satisfied by True
+
             return True
+
+
     return False
 
 
@@ -712,17 +719,21 @@ def run_pbil(input_list):
     print("Beginning...")
 
     probability_vector = [.5] * num_var  # starting values
-
+    print()
     best_clauses_sat = 0
+    print("num_iterations:", num_iterations)
 
     for i in range(0, num_iterations):
+
         samples = create_sample_vectors(probability_vector, num_individuals)
         sample_satisfy_counts = find_sample_counts(clause_set, samples)
         best, worst, best_clauses_sat = find_outlier_samples(sample_satisfy_counts, samples)
+
         probability_vector = update_vector_with_outlier(probability_vector, best, learning_rate)
         if best != worst:
             probability_vector = update_vector_with_outlier(probability_vector, best, neg_learning_rate)
         mutate_probability_vector(probability_vector, mutation_prob, mutation_amount)
+
 
     print("Final probabilities:", probability_vector)
     print("Most clauses satisfied at end:", best_clauses_sat)

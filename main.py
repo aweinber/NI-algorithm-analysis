@@ -1,6 +1,7 @@
 import random
 import sys
 
+
 def read_in_file(file_name):
     """Given a file with a maxsat problem in specified format,
     parse the file and return an array of boolean clauses"""
