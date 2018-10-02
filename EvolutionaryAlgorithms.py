@@ -2,6 +2,7 @@ import random
 import sys
 import operator
 import math
+import time
 
 #GA or PBIL
 ALGORITHM_TYPE = sys.argv[8]
@@ -9,6 +10,32 @@ ALGORITHM_TYPE = sys.argv[8]
 
 
 # **** GENETIC ALGORITHM BEGIN ****
+
+# Only the genetic algorithm will use global
+# variables from the command line.
+# Command line arguments are as follows:
+# 1. Name of file containing the problem
+# 2. Number of individuals in the population
+# 3. Method for selection: rs (rank), ts (tournament), bs (Boltzmann)
+# 4. Method for crossover: 1c (1-point), uc (uniform)
+# 5. Crossover probability
+# 6. Mutation probability
+# 7. Number of generations to run
+# 8. Algorithm selection -- g to run this algorithm
+
+#Globals from command line for GA:
+FILENAME = sys.argv[1]          #file name always
+N = int(sys.argv[2])            #population size always
+THREE = sys.argv[3]             #see above
+FOUR = sys.argv[4]              #see above
+FIVE = float(sys.argv[5])       #see above
+SIX = float(sys.argv[6])        #see above
+GENERATIONS = int(sys.argv[7])  #generations always
+
+#For tournament selection in GA
+M = 2 #Size of tournament pool
+k = 1 #Number of winners per tournament
+
 
 #Opens file and extracts and returns the MAXSAT problem, number of variables, and number
 #of clauses. 
@@ -29,8 +56,10 @@ def read_in_file_GA(file_name):
     return (out, int(num_var), int(num_clauses))
 
 
+#Globals from file:
+PROBLEM, NUM_VAR, NUM_CLAUSES = read_in_file_GA(FILENAME)
 
-def generate_individual(NUM_VAR):
+def generate_individual():
     #Generates one random instance of an individual or solution
     #returns one random individual in array form
 
@@ -47,7 +76,7 @@ def generate_individual(NUM_VAR):
 
 
 
-def generate_population(N, NUM_VAR):
+def generate_population():
     #uses generate individual function to create a population
     #of size N. Returns an array of the population
 
@@ -56,14 +85,14 @@ def generate_population(N, NUM_VAR):
 
     #generate individual N times and add to array
     for num in range(N):
-        population.append(generate_individual(NUM_VAR))
+        population.append(generate_individual())
 
 
 
     return population
 
 
-def evaluate_fitness(population, N, PROBLEM):
+def evaluate_fitness(population):
 
     #Evaluates how many clauses can be satisfied for each individual
     #in the population. Returns array of scores. 
@@ -136,7 +165,7 @@ def select_individual_rank(ranks, sum_ranks):
 
     return -1
 
-def ranked_selection(population, fitness, N):
+def ranked_selection(population, fitness):
     #Selects individuals for breeding pool using ranked selection.
     #Returns an array of individuals that represends the breeding
     #pool.
@@ -190,7 +219,7 @@ def ranked_selection(population, fitness, N):
 
     return breeding_pool
 
-def tournament_selection(population, fitness, N, M, k):
+def tournament_selection(population, fitness):
     #this function performs tournament selection
     #each tournament consists of M individuals and k winners
     #M and k are globals
@@ -259,7 +288,7 @@ def Boltzmann_select_one(b_fitnesses, b_sum):
 
     return 100
 
-def Boltzmann_selection(population, fitness, N):
+def Boltzmann_selection(population, fitness):
 
 
     #need to get boltzmann fitness and sum 
@@ -296,7 +325,7 @@ def Boltzmann_selection(population, fitness, N):
 
     return breeding_pool
 
-def one_point_crossover(breeding_pool, N, FIVE, NUM_VAR):
+def one_point_crossover(breeding_pool):
     #Performs 1-point crossover with probability
     #specified as command line argument. 
 
@@ -367,7 +396,7 @@ def one_point_crossover(breeding_pool, N, FIVE, NUM_VAR):
 
     return new_pop
 
-def uniform_crossover(breeding_pool, N, FIVE, NUM_VAR):
+def uniform_crossover(breeding_pool):
     #Performs uniform crossover on breeding pool
     #with probability specified as a command line
     #argument
@@ -441,7 +470,7 @@ def uniform_crossover(breeding_pool, N, FIVE, NUM_VAR):
     return new_pop
 
 
-def mutation(current_pop, N, NUM_VAR, SIX):
+def mutation(current_pop):
 
     final_pop = current_pop
     #loop through solutions in population
@@ -473,33 +502,6 @@ def mutation(current_pop, N, NUM_VAR, SIX):
 
 def genetic_algorithm():
 
-    # Command line arguments are as follows:
-    # 1. Name of file containing the problem
-    # 2. Number of individuals in the population
-    # 3. Method for selection: rs (rank), ts (tournament), bs (Boltzmann)
-    # 4. Method for crossover: 1c (1-point), uc (uniform)
-    # 5. Crossover probability
-    # 6. Mutation probability
-    # 7. Number of generations to run
-    # 8. Algorithm selection -- g to run this algorithm
-
-    #Globals from command line for GA:
-    FILENAME = sys.argv[1]          #file name always
-    N = int(sys.argv[2])            #population size always
-    THREE = sys.argv[3]             #see above
-    FOUR = sys.argv[4]              #see above
-    FIVE = float(sys.argv[5])       #see above
-    SIX = float(sys.argv[6])        #see above
-    GENERATIONS = int(sys.argv[7])  #generations always
-
-    #For tournament selection in GA
-    M = 2 #Size of tournament pool
-    k = 1 #Number of winners per tournament
-
-
-    #from file:
-    PROBLEM, NUM_VAR, NUM_CLAUSES = read_in_file_GA(FILENAME)
-
 
     #initialize generation counter
     generation_counter = 0
@@ -509,7 +511,7 @@ def genetic_algorithm():
 
 
     #generate our inital population
-    population = generate_population(N, NUM_VAR)
+    population = generate_population()
 
 
     #Do algorithm if possible until we hit our generation limit
@@ -519,7 +521,7 @@ def genetic_algorithm():
         generation_counter += 1
 
         #evaluate fitness of population
-        fitness = evaluate_fitness(population, N, PROBLEM)
+        fitness = evaluate_fitness(population)
 
 
 
@@ -543,20 +545,20 @@ def genetic_algorithm():
 
         #Decide Selection method
         if THREE == "rs":
-            breeding_pool = ranked_selection(population, fitness, N)
+            breeding_pool = ranked_selection(population, fitness)
         elif THREE == "ts":
-            breeding_pool = tournament_selection(population, fitness, N, M, k)
+            breeding_pool = tournament_selection(population, fitness)
         elif THREE == "bs":
-            breeding_pool = Boltzmann_selection(population, fitness, N)
+            breeding_pool = Boltzmann_selection(population, fitness)
 
         #Decide Crossover method
         if FOUR == "1c":
-            current_pop = one_point_crossover(breeding_pool, N, FIVE, NUM_VAR)
+            current_pop = one_point_crossover(breeding_pool)
         elif FOUR == "uc":
-            current_pop = uniform_crossover(breeding_pool, N, FIVE, NUM_VAR)
+            current_pop = uniform_crossover(breeding_pool)
 
         #Mutate population
-        population = mutation(current_pop, N, NUM_VAR, SIX)
+        population = mutation(current_pop)
 
         
 
@@ -567,7 +569,7 @@ def genetic_algorithm():
     print("Number of variables: " + str(NUM_VAR))
     print("Number of clauses: " + str(NUM_CLAUSES))
     print("Number of clauses satisfied: " + str(best_fitness))
-    print("Percentage of clauses satisfied: " + "{}%".format((best_fitness/NUM_CLAUSES) * 100))
+    print("Percentage of clauses satisfied: " + "{}%".format((best_fitness/float(NUM_CLAUSES)) * 100))
     print("Solution: " + str(best_solution))
     print("This solution was found during iteration: " + str(generation_counter))
 
@@ -718,21 +720,30 @@ def run_pbil(input_list):
     print("Beginning...")
 
     probability_vector = [.5] * num_var  # starting values
-
+    print()
     best_clauses_sat = 0
+    print("num_iterations:", num_iterations)
 
     for i in range(0, num_iterations):
+
         samples = create_sample_vectors(probability_vector, num_individuals)
         sample_satisfy_counts = find_sample_counts(clause_set, samples)
         best, worst, best_clauses_sat = find_outlier_samples(sample_satisfy_counts, samples)
+
         probability_vector = update_vector_with_outlier(probability_vector, best, learning_rate)
         if best != worst:
             probability_vector = update_vector_with_outlier(probability_vector, best, neg_learning_rate)
         mutate_probability_vector(probability_vector, mutation_prob, mutation_amount)
 
-    print("Final probabilities:", probability_vector)
-    print("Most clauses satisfied at end:", best_clauses_sat)
 
+
+    print("The filename for this problem is: " + file_name)
+    print("Number of variables: " + str(num_var))
+    print("Number of clauses: " + str(num_clauses))
+    print("Number of clauses satisfied: " + str(best_clauses_sat))
+    print("Percentage of clauses satisfied: " + "{}%".format((best_clauses_sat/float(num_clauses)) * 100))
+    print("Solution: " + str(probability_vector))
+    print("This solution was found during iteration: " + str(i+1))
 
 #   **** END OF PBIL ****
 
@@ -746,12 +757,12 @@ def main():
     if len(input_list) != 8:
         print("Error... must accept 8 command line arguments")
         return
-
+    start_time = time.time()
     if ALGORITHM_TYPE == 'p':
         run_pbil(input_list)
 
     if ALGORITHM_TYPE == 'g':
         genetic_algorithm()
-
+    print("The Program took: " + str(time.time() - start_time) + " seconds")
 if __name__ == '__main__':
     main()
